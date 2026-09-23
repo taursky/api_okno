@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\V1\OrderController;
+use App\Http\Controllers\Api\V1\PaymentController;
+use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\ShipmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,20 +29,29 @@ Route::prefix('v1')
                 ]);
             });
 
+            Route::middleware('abilities:products:read')->group(function () {
+                Route::get('/products', [ProductController::class, 'index'])
+                    ->name('api.v1.products.index');
+
+                Route::get('/products/{id}', [ProductController::class, 'show'])
+                    ->whereNumber('id')
+                    ->name('api.v1.products.show');
+            });
+
             Route::middleware('abilities:orders:read')
                 ->group(function () {
-
-                    Route::get(
-                        '/orders',
-                        [OrderController::class, 'index']
-                    )->name('api.v1.orders.index');
-
-                    Route::get(
-                        '/orders/{id}',
-                        [OrderController::class, 'show']
-                    )
+                    Route::get('/orders', [OrderController::class, 'index'])
+                        ->name('api.v1.orders.index');
+                    Route::get('/orders/{id}', [OrderController::class, 'show'])
                         ->whereNumber('id')
                         ->name('api.v1.orders.show');
                 });
+
+            Route::get('/order-statuses', [OrderController::class , 'orderStatuses'])
+                ->name('api.v1.orders.get-statuses');
+            Route::get('/payments', [PaymentController::class , 'payments'])
+                ->name('api.v1.orders.payments');
+            Route::get('/shipments', [ShipmentController::class , 'shipments'])
+                ->name('api.v1.orders.shipments');
         });
     });

@@ -11,4 +11,9 @@ class OrderState extends ExternalModel
     protected $guarded = [];
 
     public $timestamps = false;
+
+    public function ScopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 }

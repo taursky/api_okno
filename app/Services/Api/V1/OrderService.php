@@ -3,6 +3,7 @@
 namespace App\Services\Api\V1;
 
 use App\Models\External\Order;
+use App\Models\External\OrderState;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -87,5 +88,10 @@ class OrderService
                 'logs',
             ])
             ->findOrFail($id);
+    }
+
+    public function orderStatuses()
+    {
+        return OrderState::active()->get();
     }
 }
