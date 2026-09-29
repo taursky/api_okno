@@ -34,5 +34,16 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'crm' => [
+        'webhook_url' => env('CRM_WEBHOOK_URL'),
+        'webhook_order_url' => env('CRM_WEBHOOK_ORDERS_URL'),
+        'webhook_secret' => env('CRM_WEBHOOK_SECRET'),
+        'webhook_queue' => env('CRM_WEBHOOK_QUEUE', 'crm-webhooks'),
+        'currency' => env('CRM_ORDER_CURRENCY', 'RUB'),
+        'connect_timeout' => (int) env('CRM_WEBHOOK_CONNECT_TIMEOUT', 3),
+        'queued_stale_minutes' => (int) env('CRM_WEBHOOK_QUEUED_STALE_MINUTES', 15),
+        'processing_stale_minutes' => 15,
+        'timeout' => (int) env('CRM_WEBHOOK_TIMEOUT', 5),
+    ],
 
 ];
